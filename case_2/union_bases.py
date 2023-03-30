@@ -11,4 +11,4 @@ for file in os.listdir(local_files):
         df.append(pd.read_excel(os.path.join(local_files, file)))
 
 df_master = pd.concat(df, axis=0)
-df_master.to_excel('base_dados/union_bases.xlsx', index=False)
+df_master.to_csv('base_dados/union_bases.csv', index=False)
