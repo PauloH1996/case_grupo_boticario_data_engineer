@@ -3,9 +3,12 @@ from google.cloud import storage
 # from google.oauth2 import service_account
 # from google.cloud import bigquery_storage
 
+from dotenv import load_dotenv
 import os
 
-credential_path = "C:\paulo.alcantara\Documents\ProjetosVSC\GoogleAds\B2w-bee-u-dados-e-insights-prd-8f576d661bd8.json"
+load_dotenv()
+
+credential_path = os.getenv("PATH")
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
@@ -38,11 +41,11 @@ def bigquery_upload(table_id, uri):
     job_config = bigquery.LoadJobConfig(autodetect=True,
     write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
     source_format=bigquery.SourceFormat.CSV,
-    time_partitioning=bigquery.TimePartitioning(
-    type_=bigquery.TimePartitioningType.DAY,
-    field="date",  # Name of the column to use for partitioning.
-    #expiration_ms=7776000000,  # 90 days.
-    ),
+    #time_partitioning=bigquery.TimePartitioning(
+    #type_=bigquery.TimePartitioningType.DAY,
+    #field="date",  # Name of the column to use for partitioning.
+    ##expiration_ms=7776000000,  # 90 days.
+    #),
     )
 
     load_job = client_BigQuery.load_table_from_uri(
@@ -62,7 +65,6 @@ upload_blob(
 )
 
 bigquery_upload(
-    bigquery_client=client_BigQuery,
     table_id="b2w-bee-u-dados-e-insights-stg.Case_gb.table_base",
     uri="gs://equipe_dados/case_gb/union_bases.csv"
 )
