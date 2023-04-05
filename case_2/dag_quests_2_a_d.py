@@ -52,16 +52,16 @@ with DAG(
     )
 
     case_2_table_3 = BigQueryExecuteQueryOperator(
-    task_id='caso_2_numero_2_letra_B',
-    sql='case_2_table_2.sql',
+    task_id='caso_2_numero_2_letra_C',
+    sql='case_2_table_3.sql',
     use_legacy_sql=False,
     gcp_conn_id="google_cloud_di_conn",
     dag=dag,
     )
 
     case_2_table_4 = BigQueryExecuteQueryOperator(
-    task_id='caso_2_numero_2_letra_B',
-    sql='case_2_table_2.sql',
+    task_id='caso_2_numero_2_letra_D',
+    sql='case_2_table_4.sql',
     use_legacy_sql=False,
     gcp_conn_id="google_cloud_di_conn",
     dag=dag,

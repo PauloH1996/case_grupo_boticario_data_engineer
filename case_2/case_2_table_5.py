@@ -8,17 +8,19 @@ import pyarrow #para o job do bigquery funcionar
 credential_path = os.getenv("PATH")
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
-
+#autenticações
 client_BigQuery = bigquery.Client()
 token = get_token()
 #result = search_for_podcast(token, "data hackers")
 
+#paramentros da url q irá consultar(query) na API 
 endpoint_url = "https://api.spotify.com/v1/search?"
 type = "show"
 market = "BR"
 limit = 50
 offset = 0
 
+#criando listas vazia pra fazer o imput dos dados
 name_list = []
 description_list = []
 id_list = []
@@ -36,18 +38,22 @@ def search_for_podcast(token, podcast_name):
     query += f'&market={market}'
     query += f'&limit={limit}'
     
-
-    result = get(query, headers=headers)
+     # envia(pedi) a requisição na API
+    result = get(query, headers=headers)                                      
     
+    # resposta em um arquivo .json
     json_result = result.json()
 
+    #repete até a contagem de linhas(len) do json acabar 
     for i in range(len(json_result['shows']['items'])):
 
+        #tira do json e coloca nas listas
         name_list.append(json_result['shows']['items'][i]['name'])
         description_list.append(json_result['shows']['items'][i]['description'])
         id_list.append(json_result['shows']['items'][i]['id'])
         total_episodios_list.append(json_result['shows']['items'][i]['total_episodes'])
-               
+
+    #retonar o json           
     return json_result
 
 search_for_podcast(token, "data hackers")
